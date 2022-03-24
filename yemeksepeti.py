@@ -30,9 +30,7 @@ for url in restaurant_url:
 
 logging.info(url_info)
 logging.info(len(url_info))
-comments=[]
 genel=[]
-Points = []
 pagecommentlink= []
 
 for url_rst in range(0,len(url_info)):
@@ -44,6 +42,7 @@ for url_rst in range(0,len(url_info)):
         if a_href["href"].find(firma_url[28:]) == 1:
             pagecommentlink.append("https://www.yemeksepeti.com/" + a_href["href"])
 for element in range(0,len(pagecommentlink)):
+    comments=[]
     logging.info("Comments Writing ......")
     logging.info(pagecommentlink[element])
     browser.get(pagecommentlink[element])
@@ -53,13 +52,13 @@ for element in range(0,len(pagecommentlink)):
         name = element.find('p')
         if name not in comments:
             comments.append(name.text)
-            
-comments_df= pd.DataFrame({'comment':comments})
-comments_df["restaurant_name"] = browser.title
-comments_df.to_sql('restaurant_comments',engine,if_exists='append',index=False)
+            comments_df= pd.DataFrame({'comment':comments})
+            comments_df["restaurant_name"] = browser.title
+            comments_df.to_sql('restaurant_comments',engine,if_exists='append',index=False)
 
 
 for element in range(0,len(pagecommentlink)):
+    Points = []
     logging.info("Puanlar yazılıyor......")
     logging.info(pagecommentlink[element])
     browser.get(pagecommentlink[element])
@@ -72,7 +71,6 @@ for element in range(0,len(pagecommentlink)):
               .replace('Lezzet',"'flavor_point'") \
               .replace('"','') + '}')
         Points.append(points)
-
-Point_df=pd.DataFrame(Points)
-Point_df["restaurant_name"]=browser.title
-Point_df.to_sql('restaurant_point',engine,if_exists='append',index=False)
+        Point_df=pd.DataFrame(Points)
+        Point_df["restaurant_name"]=browser.title
+        Point_df.to_sql('restaurant_point',engine,if_exists='append',index=False)
