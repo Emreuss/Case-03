@@ -1,10 +1,12 @@
 from dataclasses import replace
+from syslog import LOG_WARNING
 from selenium import webdriver
 from soupsieve import comments
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from bs4 import  BeautifulSoup
+import logging 
 import pandas as pd 
 import ast
 from sqlalchemy import create_engine
@@ -16,12 +18,18 @@ url_info=[]
 driver_service = Service(executable_path=driver_path)
 browser=webdriver.Chrome(service=driver_service)
 
+
+logging.basicConfig (
+    filename="./logging/reading_lg.log",
+    level=logging.INFO,
+    format = "%(asctime)s - %(levelname)s - %(message)s",
+)
+
 for url in restaurant_url:
     url_info.append(url[0])
 
-print(url_info)
-print(len(url_info))
-print(url_info[0])
+logging.info(url_info)
+logging.info(len(url_info))
 comments=[]
 genel=[]
 Points = []
@@ -36,8 +44,8 @@ for url_rst in range(0,len(url_info)):
         if a_href["href"].find(firma_url[28:]) == 1:
             pagecommentlink.append("https://www.yemeksepeti.com/" + a_href["href"])
 for element in range(0,len(pagecommentlink)):
-    print("Comment'ler yazılıyor......")
-    print(pagecommentlink[element])
+    logging.info("Comments Writing ......")
+    logging.info(pagecommentlink[element])
     browser.get(pagecommentlink[element])
     content = browser.page_source
     soup=BeautifulSoup(content,"lxml")
@@ -51,8 +59,8 @@ for element in range(0,len(pagecommentlink)):
 
 
 for element in range(0,len(pagecommentlink)):
-    print("Puanlar yazılıyor......")
-    print(pagecommentlink[element])
+    logging.info("Puanlar yazılıyor......")
+    logging.info(pagecommentlink[element])
     browser.get(pagecommentlink[element])
     content = browser.page_source
     soup=BeautifulSoup(content,"lxml")
