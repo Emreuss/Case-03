@@ -33,8 +33,7 @@ commentswordcount_cswhen= commentswordcount \
           .withColumn('IsMuthesem',when(f.column('word').contains('mutheşem'),1).otherwise(0)) \
           .withColumn('IsBerbat',when(f.column('word').contains('berbat'),1).otherwise(0))  \
           .withColumn('IsZehir',when(f.column('word').contains('zehir'),1).otherwise(0)) \
-          .withColumn('IsAfiyet',when(f.column('word').contains('Afiyet'),1).otherwise(0)) \
-          .withColumn('IsAfiyet',when(f.column('word').contains('layık'),1).otherwise(0)) 
+          .withColumn('IsAfiyet',when(f.column('word').contains('Afiyet'),1).otherwise(0))
 
  
 commentstotalbyrest=comments \
