@@ -91,18 +91,3 @@ on com.restaurant_name =point.restaurant_name
 select *,(avg_service_point * 0.30 
                + avg_speed_point  * 0.30 + avg_flavor_point * 0.40 + extra_measuring + popularity_rate *0.60) :: numeric as credit_score 
 from vw_restaurant_loan_support_report
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
