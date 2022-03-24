@@ -25,7 +25,7 @@ def  root():
 
 @app.get("/restaurants")
 def get_all_restaurant():
-    return  credit_info_dct
+    return  credit_info_dct 
 
 
 @app.get("/restaurants/{restaurant_id}")
